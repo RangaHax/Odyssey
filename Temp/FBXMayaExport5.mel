@@ -1,0 +1,23 @@
+print "Starting maya loading and fbx conversion \n";
+	
+if (`file -q -exists "/Network/Servers/phoenix.mddn.vuw.ac.nz/Volumes/XRaid/Homes/daviesandr1/Documents/OdysseyGameV0.5/assets/Models/cyclopsisland.ma"`)
+{		
+	file -o "/Network/Servers/phoenix.mddn.vuw.ac.nz/Volumes/XRaid/Homes/daviesandr1/Documents/OdysseyGameV0.5/assets/Models/cyclopsisland.ma";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "/Network/Servers/phoenix.mddn.vuw.ac.nz/Volumes/XRaid/Homes/daviesandr1/Documents/OdysseyGameV0.5/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+
+system ("rm \"/Network/Servers/phoenix.mddn.vuw.ac.nz/Volumes/XRaid/Homes/daviesandr1/Documents/OdysseyGameV0.5/Temp/CommandPipe\"");
+
+$donepipeKill = `fopen "/Network/Servers/phoenix.mddn.vuw.ac.nz/Volumes/XRaid/Homes/daviesandr1/Documents/OdysseyGameV0.5/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
